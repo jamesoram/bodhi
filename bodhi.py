@@ -4,11 +4,11 @@ from monitors.http_monitor import HttpMonitor
 from monitors.conf_loader import ConfLoader
 
 def main():
-    if len(sys.argv < 1):
+    if len(sys.argv) < 1:
       print("Please specify configuration file(s)")
       sys.exit(1)
 
-    c = ConfLoader(argv[1])
+    c = ConfLoader(sys.argv[1])
     c.load()
     mon = HttpMonitor(c.name, c.url, c.colour, c.poll_time, BlinkAlerter(), c.expected)
     mon.monitor()
