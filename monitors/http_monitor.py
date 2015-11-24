@@ -2,11 +2,13 @@
 """
 import urllib2
 import time
+import threading
 
-class HttpMonitor(object):
+class HttpMonitor(threading.Thread):
     """Monitor for HTTP calls.
     """
     def __init__(self, name, url, expected, colour, poll_time, alerter):
+        threading.Thread.__init__(self)
         self.name = name
         self.url = url
         self.expected = expected
@@ -28,7 +30,7 @@ class HttpMonitor(object):
         if not response_ok:
             self.alerter.alert(self)
 
-    def monitor(self):
+    def run(self):
         """Monitor as configured.
         """
         while self.running:

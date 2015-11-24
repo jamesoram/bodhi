@@ -16,7 +16,7 @@ def main():
         c = ConfLoader(conf_file)
         c.load()
         mon = HttpMonitor(c.name, c.url, c.expected, c.colour, c.poll_time, alerter)
-        thread.start_new_thread(mon.monitor())
+        mon.start()
 
 if __name__ == "__main__":
     sys.exit(main())
