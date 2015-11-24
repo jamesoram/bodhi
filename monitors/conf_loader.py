@@ -7,11 +7,21 @@ class ConfLoader(object):
     """
     def __init__(self, filename):
         self.filename = filename
-        self.conf = None
+        self.name = None
+        self.url = None
+        self.colour = None
+        self.poll_time = None
+        self.expected = None
+        self.alert_type = None
 
     def load(self):
         """Load the configuration file
         """
         with open(self.filename) as conf_file:
-            self.conf = json.load(conf_file)
-        return self.conf
+            conf = json.load(conf_file)
+        self.name = conf["name"]
+        self.url = conf["url"]
+        self.colour = conf["colour"]
+        self.poll_time = conf["poll_time"]
+        self.expected = conf["expected"]
+        self.alert_type = conf["alert_type"]
