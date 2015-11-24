@@ -59,4 +59,4 @@ target/
 # vim swap files
 *.swp
 
-config/*
+config/*.json
