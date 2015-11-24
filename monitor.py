@@ -1,9 +1,12 @@
+"""Monitors that can potentially trigger an alert
+"""
 import urllib2
 import time
 
 class HttpMonitor(object):
-
-    def __init__(self, name, url, expected, colour, poll_time, alerter):
+    """Monitor for HTTP calls.
+    """
+    def __init__(self, name, url, colour, poll_time, alerter, expected):
         self.name = name
         self.url = url
         self.expected = expected
@@ -13,17 +16,21 @@ class HttpMonitor(object):
         self.alerter = alerter
 
     def check(self):
-        ok = True
+        """Check to see if the HTTP call contains the expected string
+        """
+        response_ok = True
         try:
             response = urllib2.urlopen(self.url).read()
         except urllib2.URLError:
             response = ""
         if not self.expected in response:
-            ok = False
-        if not ok:
+            response_ok = False
+        if not response_ok:
             self.alerter.alert(self)
 
     def monitor(self):
+        """Monitor as configured.
+        """
         while self.running:
-          self.check()
-          time.sleep(self.poll_time)
+            self.check()
+            time.sleep(self.poll_time)
