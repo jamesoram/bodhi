@@ -12,6 +12,7 @@ def main():
     alerter = BlinkAlerter()
     conf_files = [f for f in sys.argv if ".json" in f]
     for conf_file in conf_files:
+        print "Loading " + conf_file
         c = ConfLoader(conf_file)
         c.load()
         mon = HttpMonitor(c.name, c.url, c.expected, c.colour, c.poll_time, alerter)
