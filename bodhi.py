@@ -15,7 +15,7 @@ def main():
 
     c = ConfLoader(sys.argv[1])
     c.load()
-    mon = HttpMonitor(c.name, c.url, c.colour, c.poll_time, BlinkAlerter(), c.expected)
+    mon = HttpMonitor(c.name, c.url, c.expected, c.colour, c.poll_time, BlinkAlerter())
     thread.start_new_thread(mon.monitor())
 
 if __name__ == "__main__":

@@ -6,7 +6,7 @@ import time
 class HttpMonitor(object):
     """Monitor for HTTP calls.
     """
-    def __init__(self, name, url, colour, poll_time, alerter, expected):
+    def __init__(self, name, url, expected, colour, poll_time, alerter):
         self.name = name
         self.url = url
         self.expected = expected
