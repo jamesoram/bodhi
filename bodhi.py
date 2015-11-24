@@ -9,14 +9,13 @@ from monitors.conf_loader import ConfLoader
 def main():
     """main function
     """
-    if len(sys.argv) < 1:
-        print "Please specify configuration file(s)"
-        sys.exit(1)
-
-    c = ConfLoader(sys.argv[1])
-    c.load()
-    mon = HttpMonitor(c.name, c.url, c.expected, c.colour, c.poll_time, BlinkAlerter())
-    thread.start_new_thread(mon.monitor())
+    alerter = BlinkAlerter()
+    conf_files = [f for f in sys.argv if ".json" in f]
+    for conf_file in conf_files:
+        c = ConfLoader(conf_file)
+        c.load()
+        mon = HttpMonitor(c.name, c.url, c.expected, c.colour, c.poll_time, alerter)
+        thread.start_new_thread(mon.monitor())
 
 if __name__ == "__main__":
     sys.exit(main())
