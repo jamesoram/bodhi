@@ -22,6 +22,7 @@ class HttpMonitor(threading.Thread):
         """
         response_ok = True
         try:
+            print time.asctime(time.localtime(time.time())) + " Polling " + self.name
             response = urllib2.urlopen(self.url).read()
         except urllib2.URLError:
             response = ""
