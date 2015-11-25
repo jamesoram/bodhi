@@ -12,11 +12,17 @@ class BlinkAlerter(threading.Thread):
         self.queue = Queue.LifoQueue()
         self.command = "blink1-tool --rgb "
         self.blink_time = "95"
+        self.engaged = False
 
     def alert(self, monitor):
         """Alert using blink(1) with the configuration in `monitor`
         """
         self.queue.put(monitor)
-        print "Error in: " + monitor.name
-        cmd = self.command + self.queue.get().colour + " -q --blink " + self.blink_time
+        if self.engaged = False:
+            self.engaged = True
+            print "Error in: " + monitor.name
+            cmd = self.command + self.queue.get().colour + " -q --blink " + self.blink_time
+            self.engaged = False
+        else:
+            cmd = self.command + monitor.colour
         os.system(cmd)
