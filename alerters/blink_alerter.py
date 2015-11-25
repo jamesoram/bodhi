@@ -10,7 +10,7 @@ class BlinkAlerter(threading.Thread):
     """
     def __init__(self):
         threading.Thread.__init__(self)
-        self.queue = [] #Queue.LifoQueue()
+        self.queue = []
         self.command = "blink1-tool --rgb "
         self.blink_time = "95"
         self.engaged = False
