@@ -12,29 +12,23 @@ class BlinkAlerter(threading.Thread):
         self.queue = []
         self.command = "blink1-tool -q --rgb "
         self.blink_time = "95"
-        self.engaged = True
 
     def alert(self, monitor):
         """Alert using blink(1) with the configuration in `monitor`
         """
         self.queue.append(monitor)
         print "Error in: " + monitor.name
-        if self.engaged == False:
-            self.engaged = True
-            cmd = self.command + self.queue.pop().colour + " -q --blink " + self.blink_time
-            os.system(cmd + "&")
-        else:
-            os.system("blink1-tool -q --off")
-            timeout = time.time() + 35
-            while True:
-                for i in self.queue:
-                    cmd = self.command + i.colour
-                    os.system(cmd)
-                    time.sleep(0.8)
+        os.system("blink1-tool -q --off")
+        timeout = time.time() + 35
+        while True:
+            for i in self.queue:
+                cmd = self.command + i.colour
+                os.system(cmd)
+                time.sleep(0.8)
                 if time.time() > timeout:
                     break
-            os.system("blink1-tool -q --off")
-            self.queue = []
+        os.system("blink1-tool -q --off")
+        self.queue = []
 
     def run(self):
         time.sleep(0.1)
