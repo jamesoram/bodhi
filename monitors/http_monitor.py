@@ -24,10 +24,11 @@ class HttpMonitor(threading.Thread):
         try:
             print time.asctime(time.localtime(time.time())) + " Polling " + self.name
             response = urllib2.urlopen(self.url).read()
-        except urllib2.URLError:
+        except:
             response = ""
         if not self.expected in response:
             response_ok = False
+            self.alerter.not_alert(self)
         if not response_ok:
             self.alerter.alert(self)
 

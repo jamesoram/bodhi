@@ -22,13 +22,18 @@ class BlinkAlerter(threading.Thread):
         timeout = time.time() + 35
         while True:
             for i in self.queue:
-                cmd = self.command + i.colour
+                cmd = self.command + i.colour + " &"
                 os.system(cmd)
                 time.sleep(0.8)
                 if time.time() > timeout:
                     break
         os.system("blink1-tool -q --off")
         self.queue = []
+
+    def not_alert(self, monitor):
+      print monitor.name + " OK"
+      self.queue.remove(monitor)
+      os.system("blink1-tool -q --off")
 
     def run(self):
         time.sleep(0.1)
