@@ -32,8 +32,9 @@ class BlinkAlerter(threading.Thread):
 
     def not_alert(self, monitor):
       print monitor.name + " OK"
-      self.queue.remove(monitor)
-      os.system("blink1-tool -q --off")
+      if monitor in self.queue:
+          self.queue.remove(monitor)
+          os.system("blink1-tool -q --off")
 
     def run(self):
         time.sleep(0.1)
